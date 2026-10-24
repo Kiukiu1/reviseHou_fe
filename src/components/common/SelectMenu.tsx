@@ -2,7 +2,7 @@ import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headless
 import Icon from './Icon'
 import styles from './SelectMenu.module.css'
 
-export interface SelectOption<T extends string> {
+interface SelectOption<T extends string> {
   value: T
   label: string
 }

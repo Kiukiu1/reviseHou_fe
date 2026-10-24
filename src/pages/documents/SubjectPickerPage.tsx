@@ -10,6 +10,7 @@ import SubjectTile from '../../components/document/SubjectTile'
 import { useRequest } from '../../hooks/useRequest'
 import { PATHS } from '../../routes/paths'
 import { subjectApi } from '../../services/api/subjectApi'
+import { matches } from '../../utils/format'
 import { buildSubjectTree, type MajorNode } from '../../utils/subjectTree'
 import styles from './SubjectPickerPage.module.css'
 
@@ -37,10 +38,6 @@ const COPY: Record<
     action: 'Tạo bài kiểm tra',
     actionPath: PATHS.quizCreate,
   },
-}
-
-function matches(keyword: string, ...values: (string | null | undefined)[]) {
-  return values.some((value) => value?.toLowerCase().includes(keyword))
 }
 
 export default function SubjectPickerPage({ target }: { target: Target }) {
@@ -71,7 +68,7 @@ export default function SubjectPickerPage({ target }: { target: Target }) {
       .map((major) => ({
         ...major,
         facultyName: item.name,
-        subjects: major.subjects.filter((subject) => !keyword || matches(keyword, subject.title, subject.code)),
+        subjects: major.subjects.filter((subject) => !keyword || matches(keyword, subject.name, subject.code)),
       }))
       .filter((major) => major.subjects.length > 0),
   )
@@ -129,7 +126,7 @@ export default function SubjectPickerPage({ target }: { target: Target }) {
         </div>
 
         <StateView
-          loading={subjects.loading && !subjects.data}
+          loading={subjects.loading}
           error={subjects.error}
           onRetry={subjects.reload}
           empty={groups.length === 0}

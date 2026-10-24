@@ -138,33 +138,6 @@
   border-color: var(--color-danger);
 }
 
-.empty {
-  color: var(--color-text-subtle);
-}
-
-select.control {
-  appearance: none;
-  padding-right: 36px;
-}
-
-select.control option,
-select.control optgroup {
-  color: var(--color-text);
-}
-
-.selectWrap {
-  position: relative;
-}
-
-.selectIcon {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: var(--color-icon-muted);
-}
-
 .error {
   font-size: 13px;
   color: var(--color-danger);

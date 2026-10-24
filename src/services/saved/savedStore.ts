@@ -6,7 +6,7 @@ type Listener = () => void
 const keyOf = ({ sourceType, sourceId }: SavedKey) => `${sourceType}:${sourceId}`
 
 let keys = new Set<string>()
-let loadedFor: number | null = null
+let loadedFor: string | null = null
 let loading: Promise<void> | null = null
 const listeners = new Set<Listener>()
 

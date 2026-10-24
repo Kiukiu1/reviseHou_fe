@@ -44,10 +44,10 @@ export default function SubjectDocumentsPage() {
         breadcrumbs={[
           { label: 'Tài liệu' },
           { label: 'Thư viện tài liệu', to: PATHS.documentLibrary },
-          { label: subject?.title ?? '...' },
+          { label: subject?.name ?? '...' },
         ]}
         leading={<img src={folder} alt="" width={40} height={40} />}
-        title={subject?.title ?? (loading ? 'Đang tải...' : 'Môn học')}
+        title={subject?.name ?? (loading ? 'Đang tải...' : 'Môn học')}
         meta={[
           ...(subject?.major
             ? [{ icon: 'graduation-cap' as const, label: `${subject.major.faculty.name} · ${subject.major.name}` }]

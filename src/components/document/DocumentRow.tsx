@@ -37,12 +37,12 @@ export default function DocumentRow({ document, onDelete }: DocumentRowProps) {
         {document.subject && (
           <span className={styles.meta}>
             <Icon name="folder-sm" />
-            {document.subject.title}
+            {document.subject.name}
           </span>
         )}
         <span className={styles.meta}>
           <Icon name="calendar" />
-          {formatDate(document.createdAt)}
+          {formatDate(document.dateCreated)}
         </span>
         {document.status === 'REJECTED' && document.rejectReason && (
           <span className={styles.reason}>Lý do: {document.rejectReason}</span>

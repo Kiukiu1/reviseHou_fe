@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
-import { Controller, useForm, useWatch } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
 import Button from '../../components/common/Button'
@@ -20,14 +20,18 @@ import { uploadApi } from '../../services/api/uploadApi'
 import type { DocumentItem, DocumentPayload, Subject } from '../../types/document'
 import styles from './DocumentFormPage.module.css'
 
-const CATEGORIES = ['Giáo trình', 'Bài giảng', 'Đề cương ôn tập', 'Đề thi', 'Bài tập', 'Khác']
-
 const documentSchema = (requireFile: boolean) =>
   z
     .object({
       title: z.string().trim().min(1, 'Vui lòng nhập tên tài liệu.'),
       subjectId: z.string().min(1, 'Vui lòng chọn môn học.'),
-      category: z.string().min(1, 'Vui lòng chọn loại tài liệu.'),
+      year: z
+        .string()
+        .trim()
+        .refine(
+          (value) => value === '' || (/^\d{4}$/.test(value) && Number(value) >= 1900 && Number(value) <= 2100),
+          'Năm không hợp lệ.',
+        ),
       description: z.string(),
       file: z.instanceof(File).nullable(),
     })
@@ -44,7 +48,7 @@ function valuesFrom(document?: DocumentItem, presetSubjectId = ''): FormValues {
   return {
     title: document?.title ?? '',
     subjectId: document?.subject ? String(document.subject.id) : presetSubjectId,
-    category: document?.attachments?.category ?? '',
+    year: document?.year ? String(document.year) : '',
     description: document?.description ?? '',
     file: null,
   }
@@ -60,15 +64,10 @@ function buildPayload(
   return {
     title,
     description,
-    content: description || title,
+    year: values.year ? Number(values.year) : undefined,
     subjectId: Number(values.subjectId),
-    fileUrl: uploaded?.url ?? previous?.fileUrl ?? undefined,
-    attachments: {
-      category: values.category,
-      fileName: uploaded?.name ?? previous?.attachments?.fileName,
-      mimeType: uploaded?.type ?? previous?.attachments?.mimeType,
-      size: uploaded?.size ?? previous?.attachments?.size,
-    },
+    filePath: uploaded?.url ?? previous?.filePath ?? undefined,
+    mediaType: uploaded?.type ?? previous?.mediaType ?? undefined,
   }
 }
 
@@ -94,7 +93,6 @@ function DocumentForm({ subjects, existing }: DocumentFormProps) {
     resolver: zodResolver(documentSchema(!isUpdate)),
     defaultValues: valuesFrom(existing, subjects.some((subject) => String(subject.id) === preset) ? preset : ''),
   })
-  const [titleValue, categoryValue] = useWatch({ control, name: ['title', 'category'] })
   const [step, setStep] = useState<Step>('editing')
   const [submitError, setSubmitError] = useState('')
 
@@ -115,8 +113,7 @@ function DocumentForm({ subjects, existing }: DocumentFormProps) {
     }
   }
 
-  const controlClass = (field: 'title' | 'category') =>
-    [styles.control, errors[field] && styles.invalid, !(field === 'title' ? titleValue : categoryValue) && styles.empty].filter(Boolean).join(' ')
+  const titleClass = [styles.control, errors.title && styles.invalid].filter(Boolean).join(' ')
 
   return (
     <>
@@ -130,7 +127,7 @@ function DocumentForm({ subjects, existing }: DocumentFormProps) {
             <label htmlFor="doc-title">Tên tài liệu *</label>
             <input
               id="doc-title"
-              className={controlClass('title')}
+              className={titleClass}
               placeholder="Ví dụ: Giáo trình Lập trình hướng đối tượng"
               aria-invalid={!!errors.title}
               {...register('title')}
@@ -158,26 +155,17 @@ function DocumentForm({ subjects, existing }: DocumentFormProps) {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="doc-category">Loại tài liệu *</label>
-            <div className={styles.selectWrap}>
-              <select
-                id="doc-category"
-                className={controlClass('category')}
-                aria-invalid={!!errors.category}
-                {...register('category')}
-              >
-                <option value="" disabled>
-                  Chọn loại tài liệu
-                </option>
-                {CATEGORIES.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-              <Icon name="chevron-down" size={16} className={styles.selectIcon} />
-            </div>
-            {errors.category && <p className={styles.error}>{errors.category.message}</p>}
+            <label htmlFor="doc-year">Năm</label>
+            <input
+              id="doc-year"
+              inputMode="numeric"
+              maxLength={4}
+              className={[styles.control, errors.year && styles.invalid].filter(Boolean).join(' ')}
+              placeholder="Ví dụ: 2025"
+              aria-invalid={!!errors.year}
+              {...register('year')}
+            />
+            {errors.year && <p className={styles.error}>{errors.year.message}</p>}
           </div>
 
           <div className={styles.field}>
@@ -201,7 +189,7 @@ function DocumentForm({ subjects, existing }: DocumentFormProps) {
             render={({ field }) => (
               <FileDropzone
                 file={field.value}
-                currentFileName={existing?.attachments?.fileName ?? existing?.fileUrl ?? undefined}
+                currentFileName={existing?.filePath ?? undefined}
                 invalid={!!errors.file}
                 onChange={field.onChange}
               />
@@ -276,12 +264,9 @@ export default function DocumentFormPage({ mode }: { mode: 'create' | 'update' }
   const isUpdate = mode === 'update'
 
   const subjects = useRequest(subjectApi.list, 'subjects')
-  const existing = useRequest(
-    () => (isUpdate ? documentApi.get(documentId) : Promise.resolve(undefined)),
-    `document-form-${mode}-${documentId}`,
-  )
+  const existing = useRequest(() => documentApi.get(documentId), `document-form-${documentId}`, isUpdate)
 
-  const isForeign = isUpdate && !!existing.data && existing.data.author?.id !== user?.id
+  const isForeign = isUpdate && !!existing.data && existing.data.uploader?.id !== user?.id
 
   return (
     <Container width="narrow">

@@ -1,6 +1,6 @@
 type Listener = () => void
 
-export interface PersistentStore<T> {
+interface PersistentStore<T> {
   get: () => T
   set: (next: T | ((prev: T) => T)) => void
   subscribe: (listener: Listener) => () => void

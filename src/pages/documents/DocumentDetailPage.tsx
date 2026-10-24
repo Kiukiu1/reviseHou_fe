@@ -23,7 +23,7 @@ const RELATED_LIMIT = 6
 async function loadDetail(id: number) {
   const document = await documentApi.get(id)
   const related = document.subject ? await documentApi.listApprovedBySubject(document.subject.id) : []
-  return { document, related: related.filter((item) => item.id !== id).slice(0, RELATED_LIMIT) }
+  return { document, related: related.filter((item) => Number(item.id) !== id).slice(0, RELATED_LIMIT) }
 }
 
 export default function DocumentDetailPage() {
@@ -31,9 +31,9 @@ export default function DocumentDetailPage() {
   const { user } = useAuth()
   const { data, loading, error, reload } = useRequest(() => loadDetail(documentId), `document-${documentId}`)
   const document = data?.document
-  const { saved, toggle } = useSavedToggle('DOCUMENT', document?.id)
+  const { saved, toggle } = useSavedToggle('DOCUMENT', document ? Number(document.id) : undefined)
   const [liked, setLiked] = useState(false)
-  const isOwner = !!document && document.author?.id === user?.id
+  const isOwner = !!document && document.uploader?.id === user?.id
 
   const scrollToComments = () => globalThis.document.getElementById('comments')?.scrollIntoView({ behavior: 'smooth' })
 
@@ -47,15 +47,15 @@ export default function DocumentDetailPage() {
               { label: 'Tài liệu' },
               { label: 'Thư viện tài liệu', to: PATHS.documentLibrary },
               ...(document.subject
-                ? [{ label: document.subject.title, to: PATHS.subjectDocuments(document.subject.id) }]
+                ? [{ label: document.subject.name, to: PATHS.subjectDocuments(document.subject.id) }]
                 : []),
               { label: document.title },
             ]}
             title={document.title}
             meta={[
-              ...(document.subject ? [{ icon: 'graduation-cap' as const, label: document.subject.title }] : []),
-              { icon: 'calendar', label: formatDate(document.createdAt) },
-              ...(document.author ? [{ icon: 'student' as const, label: document.author.username }] : []),
+              ...(document.subject ? [{ icon: 'graduation-cap' as const, label: document.subject.name }] : []),
+              { icon: 'calendar', label: formatDate(document.dateCreated) },
+              ...(document.uploader ? [{ icon: 'student' as const, label: document.uploader.fullName }] : []),
             ]}
             actions={
               <>
@@ -114,7 +114,7 @@ export default function DocumentDetailPage() {
             <hr className={styles.divider} />
 
             <div className={styles.columns}>
-              <CommentSection id="comments" sourceType="DOCUMENT" sourceId={document.id} />
+              <CommentSection id="comments" sourceType="DOCUMENT" sourceId={Number(document.id)} />
               {data.related.length > 0 && (
                 <aside className={styles.related} aria-labelledby="related-title">
                   <h2 id="related-title" className={styles.relatedTitle}>

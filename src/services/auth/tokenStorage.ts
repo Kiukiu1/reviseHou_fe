@@ -1,4 +1,4 @@
-import type { AuthSession, AuthUser } from '../../types/auth'
+import type { AuthSession } from '../../types/auth'
 import { isTokenExpired } from '../../utils/jwt'
 
 const SESSION_KEY = 'revise.session'
@@ -13,7 +13,7 @@ function readFromStorage(): AuthSession | null {
     const raw = localStorage.getItem(SESSION_KEY)
     if (!raw) return null
     const parsed = JSON.parse(raw) as AuthSession
-    return isTokenExpired(parsed.refreshToken, 0) ? null : parsed
+    return isTokenExpired(parsed.refreshToken) ? null : parsed
   } catch {
     return null
   }
@@ -32,23 +32,13 @@ function write(next: AuthSession | null) {
   notify()
 }
 
-function toAuthUser(user: AuthUser): AuthUser {
-  return {
-    id: user.id,
-    username: user.username,
-    email: user.email,
-    avatarUrl: user.avatarUrl,
-    createdAt: user.createdAt,
-  }
-}
-
 export const tokenStorage = {
   getSession: () => session,
   getAccessToken: () => session?.accessToken ?? null,
   getRefreshToken: () => session?.refreshToken ?? null,
 
   save(next: AuthSession) {
-    write({ ...next, user: toAuthUser(next.user) })
+    write(next)
   },
 
   clear() {

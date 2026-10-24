@@ -22,11 +22,11 @@ export default function QuizCard({ quiz, saved }: QuizCardProps) {
         <ul className={styles.stats}>
           <li>
             <Icon name="clock" />
-            {quiz.durationMinutes} Phút
+            {quiz.estimateMinute} Phút
           </li>
           <li>
             <Icon name="list" />
-            {quiz.questionCount} Câu
+            {quiz.totalQuestion} Câu
           </li>
           <li>
             <Icon name="user" />
@@ -34,10 +34,10 @@ export default function QuizCard({ quiz, saved }: QuizCardProps) {
           </li>
         </ul>
       </div>
-      <h3 className={styles.title}>{quiz.title}</h3>
+      <h3 className={styles.title}>{quiz.name}</h3>
       <span className={styles.subject}>
         <Icon name="folder-sm" />
-        <span className={styles.ellipsis}>{quiz.subject.title}</span>
+        <span className={styles.ellipsis}>{quiz.subject.name}</span>
       </span>
     </Link>
   )

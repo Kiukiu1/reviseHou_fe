@@ -43,7 +43,7 @@ function Composer({ id, placeholder, autoFocus, onSubmit }: ComposerProps) {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <Avatar name={user?.username} src={user?.avatarUrl} size={32} />
+      <Avatar name={user?.fullName} src={user?.avatar} size={32} />
       <div className={styles.composer}>
         <div className={styles.inputBox}>
           <label htmlFor={id} className="visually-hidden">
@@ -84,16 +84,16 @@ function Comment({ comment, rootId, replyingTo, onReply, onCreateReply, onDelete
 
   return (
     <li className={nested ? `${styles.comment} ${styles.nested}` : styles.comment}>
-      <Avatar name={comment.user.username} src={comment.user.avatarUrl} />
+      <Avatar name={comment.user.fullName} src={comment.user.avatar} />
       <div className={styles.commentBody}>
         <div className={styles.commentHead}>
-          <strong>{comment.deleted ? 'Bình luận đã bị xóa' : comment.user.username}</strong>
+          <strong>{comment.deleted ? 'Bình luận đã bị xóa' : comment.user.fullName}</strong>
           <span className={styles.dot} aria-hidden="true" />
-          <span className={styles.date}>{formatDate(comment.createdAt)}</span>
+          <span className={styles.date}>{formatDate(comment.dateCreated)}</span>
         </div>
         {!comment.deleted && (
           <p className={styles.content}>
-            {comment.replyToUser && <span className={styles.mention}>@{comment.replyToUser.username} </span>}
+            {comment.replyToUser && <span className={styles.mention}>@{comment.replyToUser.fullName} </span>}
             {comment.content}
           </p>
         )}
@@ -112,7 +112,7 @@ function Comment({ comment, rootId, replyingTo, onReply, onCreateReply, onDelete
         {replyingTo === comment.id && (
           <Composer
             id={`reply-${comment.id}`}
-            placeholder={`Trả lời ${comment.user.username}`}
+            placeholder={`Trả lời ${comment.user.fullName}`}
             autoFocus
             onSubmit={(content) => onCreateReply(rootId, comment, content)}
           />
@@ -195,7 +195,7 @@ export default function CommentSection({
       <Composer id="comment-input" placeholder={placeholder} onSubmit={createRoot} />
       {actionError && <p className={styles.error}>{actionError}</p>}
       <StateView
-        loading={loading && !data}
+        loading={loading}
         error={error}
         onRetry={reload}
         empty={comments.length === 0}

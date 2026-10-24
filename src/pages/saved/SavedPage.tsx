@@ -11,7 +11,6 @@ export default function SavedPage() {
   const { data, loading, error, reload } = useRequest(savedApi.list, 'saved-list')
   const documents = data?.documents ?? []
   const quizzes = data?.quizzes ?? []
-  const pending = loading && !data
 
   return (
     <Container className={styles.page}>
@@ -23,7 +22,7 @@ export default function SavedPage() {
       <CarouselSection
         title="Tài liệu"
         count={documents.length}
-        loading={pending}
+        loading={loading}
         error={error}
         onRetry={reload}
         emptyText="Bạn chưa lưu tài liệu nào. Bấm “Lưu” ở trang tài liệu để thêm vào đây."
@@ -36,7 +35,7 @@ export default function SavedPage() {
       <CarouselSection
         title="Bài kiểm tra"
         count={quizzes.length}
-        loading={pending}
+        loading={loading}
         error={error}
         onRetry={reload}
         emptyText="Bạn chưa lưu bài kiểm tra nào. Bấm “Lưu” ở trang bài kiểm tra để thêm vào đây."

@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 import LoginPage from '../pages/auth/LoginPage'
 import DocumentDetailPage from '../pages/documents/DocumentDetailPage'
@@ -33,13 +33,11 @@ export const router = createBrowserRouter([
           { path: PATHS.documentLibrary, element: <SubjectPickerPage key="document" target="document" /> },
           { path: PATHS.subjectDocuments(':subjectId'), element: <SubjectDocumentsPage /> },
           { path: PATHS.mine, element: <MinePage /> },
-          { path: '/documents/mine', element: <Navigate to={PATHS.myDocuments} replace /> },
           { path: PATHS.documentCreate, element: <DocumentFormPage key="create" mode="create" /> },
           { path: PATHS.documentEdit(':documentId'), element: <DocumentFormPage key="update" mode="update" /> },
           { path: PATHS.documentDetail(':documentId'), element: <DocumentDetailPage /> },
           { path: PATHS.quizLibrary, element: <SubjectPickerPage key="quiz" target="quiz" /> },
           { path: PATHS.subjectQuizzes(':subjectId'), element: <SubjectQuizzesPage /> },
-          { path: '/quizzes/mine', element: <Navigate to={PATHS.myQuizzes} replace /> },
           { path: PATHS.quizCreate, element: <QuizFormPage key="create" mode="create" /> },
           { path: PATHS.quizEdit(':quizId'), element: <QuizFormPage key="update" mode="update" /> },
           { path: PATHS.quizDetail(':quizId'), element: <QuizDetailPage /> },

@@ -24,7 +24,7 @@ const normalize = (text: string) =>
   text.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase()
 
 const subjectLabel = (subject: Subject | null) =>
-  subject ? (subject.code ? `${subject.title} (${subject.code})` : subject.title) : ''
+  subject ? `${subject.name} (${subject.code})` : ''
 
 export default function SubjectSelect({
   id,
@@ -55,7 +55,7 @@ export default function SubjectSelect({
       .map((group) => {
         if (normalize(group.label).includes(query)) return group
         const matched = group.subjects.filter((subject) =>
-          normalize(`${subject.title} ${subject.code ?? ''}`).includes(query),
+          normalize(`${subject.name} ${subject.code}`).includes(query),
         )
         return { ...group, subjects: matched }
       })
@@ -103,8 +103,8 @@ export default function SubjectSelect({
                   >
                     {({ selected: isSelected }) => (
                       <>
-                        <span className={styles.optionTitle}>{subject.title}</span>
-                        {subject.code && <span className={styles.code}>{subject.code}</span>}
+                        <span className={styles.optionTitle}>{subject.name}</span>
+                        <span className={styles.code}>{subject.code}</span>
                         {isSelected && <Icon name="check" size={16} className={styles.check} />}
                       </>
                     )}

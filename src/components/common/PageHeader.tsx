@@ -4,12 +4,12 @@ import Container from './Container'
 import Icon, { type IconName } from './Icon'
 import styles from './PageHeader.module.css'
 
-export interface Crumb {
+interface Crumb {
   label: string
   to?: string
 }
 
-export interface MetaItem {
+interface MetaItem {
   icon: IconName
   label: ReactNode
 }

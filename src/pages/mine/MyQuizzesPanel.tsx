@@ -69,7 +69,7 @@ export default function MyQuizzesPanel() {
         </div>
 
         <StateView
-          loading={loading && !data}
+          loading={loading}
           error={error}
           onRetry={reload}
           empty={quizzes.length === 0}
@@ -83,21 +83,21 @@ export default function MyQuizzesPanel() {
                   <img src={quizIcon} alt="" width={44} height={47} className={styles.icon} />
                   <div className={styles.info}>
                     <div className={styles.titleLine}>
-                      <h3 className={styles.title}>{quiz.title}</h3>
+                      <h3 className={styles.title}>{quiz.name}</h3>
                       <StatusBadge status={quiz.status} />
                     </div>
                     <p className={styles.meta}>
                       <span>
                         <Icon name="folder-sm" />
-                        {quiz.subject.title}
+                        {quiz.subject.name}
                       </span>
                       <span>
                         <Icon name="list" />
-                        {quiz.questionCount} câu
+                        {quiz.totalQuestion} câu
                       </span>
                       <span>
                         <Icon name="clock" />
-                        {quiz.durationMinutes} phút
+                        {quiz.estimateMinute} phút
                       </span>
                       <span>
                         <Icon name="user" />
@@ -105,7 +105,7 @@ export default function MyQuizzesPanel() {
                       </span>
                       <span>
                         <Icon name="calendar" />
-                        Cập nhật {formatDate(quiz.updateAt)}
+                        Cập nhật {formatDate(quiz.dateModified)}
                       </span>
                     </p>
                     {quiz.status === 'REJECTED' && quiz.rejectReason && (
@@ -127,7 +127,7 @@ export default function MyQuizzesPanel() {
                       type="button"
                       className={styles.delete}
                       onClick={() => setPendingDelete(quiz)}
-                      aria-label={`Xóa ${quiz.title}`}
+                      aria-label={`Xóa ${quiz.name}`}
                       title="Xóa"
                     >
                       <Icon name="trash" size={18} />
@@ -156,7 +156,7 @@ export default function MyQuizzesPanel() {
           </>
         }
       >
-        Bài “{pendingDelete?.title}” sẽ bị ẩn khỏi danh sách và người khác không làm được nữa.
+        Bài “{pendingDelete?.name}” sẽ bị ẩn khỏi danh sách và người khác không làm được nữa.
         {deleteError && <p className={styles.error}>{deleteError}</p>}
       </Modal>
     </>

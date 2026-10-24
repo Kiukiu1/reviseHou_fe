@@ -29,7 +29,7 @@ export default function SubjectQuizzesPage() {
   const subject = data?.subject
 
   const quizzes = [...(data?.items ?? [])].sort((a, b) =>
-    sort === 'popular' ? b.attemptCount - a.attemptCount : b.createdAt.localeCompare(a.createdAt),
+    sort === 'popular' ? b.attemptCount - a.attemptCount : b.dateCreated.localeCompare(a.dateCreated),
   )
   const paged = usePaged(quizzes, PAGE_SIZE)
 
@@ -39,10 +39,10 @@ export default function SubjectQuizzesPage() {
         breadcrumbs={[
           { label: 'Bài kiểm tra' },
           { label: 'Chọn môn học', to: PATHS.quizLibrary },
-          { label: subject?.title ?? '...' },
+          { label: subject?.name ?? '...' },
         ]}
         leading={<img src={folder} alt="" width={40} height={40} />}
-        title={subject?.title ?? (loading ? 'Đang tải...' : 'Môn học')}
+        title={subject?.name ?? (loading ? 'Đang tải...' : 'Môn học')}
         meta={[
           ...(subject?.major
             ? [{ icon: 'graduation-cap' as const, label: `${subject.major.faculty.name} · ${subject.major.name}` }]

@@ -1,6 +1,6 @@
 export type DocumentStatus = 'PENDING' | 'ACTIVE' | 'REJECTED' | 'INACTIVE'
 
-export type ActiveStatus = 'ACTIVE' | 'INACTIVE'
+type ActiveStatus = 'ACTIVE' | 'INACTIVE'
 
 export interface Faculty {
   id: number
@@ -19,50 +19,41 @@ export interface Major {
 
 export interface Subject {
   id: number
-  title: string
+  code: string
+  name: string
   description?: string | null
-  code?: string | null
   status: ActiveStatus
-  createdAt: string
+  dateCreated: string
   major?: Major | null
 }
 
-export interface DocumentAuthor {
-  id: number
-  username: string
-  email: string
-  avatarUrl?: string | null
-}
-
-export interface DocumentAttachments {
-  category?: string
-  fileName?: string
-  mimeType?: string
-  size?: number
+interface DocumentUploader {
+  id: string
+  fullName: string
+  avatar?: string | null
 }
 
 export interface DocumentItem {
-  id: number
+  id: string
   title: string
   description?: string | null
-  content: string
+  year?: number | null
+  filePath?: string | null
+  mediaType?: string | null
   status: DocumentStatus
   rejectReason?: string | null
-  fileUrl?: string | null
-  attachments?: DocumentAttachments | null
-  createdAt: string
-  updateAt: string
+  dateCreated: string
   subject?: Subject | null
-  author?: DocumentAuthor | null
+  uploader?: DocumentUploader | null
 }
 
 export interface DocumentPayload {
   title: string
   description?: string
-  content: string
+  year?: number
+  filePath?: string
+  mediaType?: string
   subjectId: number
-  fileUrl?: string
-  attachments?: DocumentAttachments
 }
 
 export interface UploadedFile {

@@ -30,7 +30,7 @@ const TABS: { value: MineTab; label: string; icon: IconName; action: string; to:
 export default function MinePage() {
   const [params, setParams] = useSearchParams()
   const tab: MineTab = params.get('tab') === 'quizzes' ? 'quizzes' : 'documents'
-  const current = TABS.find((item) => item.value === tab) ?? TABS[0]
+  const current = TABS.find((item) => item.value === tab)!
 
   return (
     <>

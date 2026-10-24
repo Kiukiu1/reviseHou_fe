@@ -1,9 +1,9 @@
 export type CommentSourceType = 'DOCUMENT' | 'QUIZ'
 
-export interface CommentUser {
-  id: number
-  username: string
-  avatarUrl?: string | null
+interface CommentUser {
+  id: string
+  fullName: string
+  avatar?: string | null
 }
 
 export interface CommentItem {
@@ -11,8 +11,7 @@ export interface CommentItem {
   parentId: number | null
   content: string | null
   deleted: boolean
-  createdAt: string
-  updateAt: string
+  dateCreated: string
   user: CommentUser
   replyToUser: CommentUser | null
   replies?: CommentItem[]
@@ -23,5 +22,5 @@ export interface CreateCommentPayload {
   sourceId: number
   content: string
   parentId?: number
-  replyToUserId?: number
+  replyToUserId?: string
 }

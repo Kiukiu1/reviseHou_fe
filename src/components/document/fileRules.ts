@@ -1,5 +1,5 @@
 export const ACCEPTED_EXTENSIONS = ['.pdf', '.doc', '.docx', '.ppt', '.pptx']
-export const MAX_FILE_SIZE = 10 * 1024 * 1024
+const MAX_FILE_SIZE = 10 * 1024 * 1024
 
 export function fileError(file: File): string | undefined {
   const extension = file.name.slice(file.name.lastIndexOf('.')).toLowerCase()

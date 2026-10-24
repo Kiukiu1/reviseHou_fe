@@ -12,11 +12,11 @@ import { quizApi } from '../../services/api/quizApi'
 import type { AnswerSelection, Attempt, AttemptQuestion } from '../../types/quiz'
 import { formatDuration } from '../../utils/format'
 import { QUESTIONS_PER_PAGE } from './attemptRules'
+import { LETTERS } from './quizDraft'
 import styles from './AttemptPage.module.css'
 
 type Selections = Record<number, number | null>
 
-const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F']
 
 function selectionsOf(attempt: Attempt): Selections {
   return Object.fromEntries(attempt.questions.map((question) => [question.id, question.selectedAnswerId]))
@@ -411,7 +411,7 @@ export default function AttemptPage() {
 
   return (
     <StateView
-      loading={request.loading && !attempt}
+      loading={request.loading}
       error={request.error}
       onRetry={request.reload}
       empty={!attempt}
@@ -423,14 +423,14 @@ export default function AttemptPage() {
             width="wide"
             breadcrumbs={[
               { label: 'Bài kiểm tra', to: PATHS.quizLibrary },
-              { label: attempt.quiz.subject.title, to: PATHS.subjectQuizzes(attempt.quiz.subject.id) },
-              { label: attempt.quiz.title, to: PATHS.quizDetail(attempt.quiz.id) },
+              { label: attempt.quiz.subject.name, to: PATHS.subjectQuizzes(attempt.quiz.subject.id) },
+              { label: attempt.quiz.name, to: PATHS.quizDetail(attempt.quiz.id) },
               { label: attempt.status === 'SUBMITTED' ? 'Kết quả' : 'Làm bài' },
             ]}
-            title={attempt.quiz.title}
+            title={attempt.quiz.name}
             meta={[
-              { icon: 'folder-sm', label: attempt.quiz.subject.title },
-              { icon: 'clock', label: `${attempt.quiz.durationMinutes} phút` },
+              { icon: 'folder-sm', label: attempt.quiz.subject.name },
+              { icon: 'clock', label: `${attempt.quiz.estimateMinute} phút` },
               { icon: 'quiz-sm', label: `${attempt.totalQuestion} câu hỏi` },
             ]}
           />

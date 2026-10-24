@@ -9,13 +9,10 @@ import { usePaged } from '../../hooks/usePaged'
 import { useRequest } from '../../hooks/useRequest'
 import { documentApi } from '../../services/api/documentApi'
 import { quizApi } from '../../services/api/quizApi'
+import { matches } from '../../utils/format'
 import styles from './SearchPage.module.css'
 
 const PAGE_SIZE = 12
-
-function matches(keyword: string, ...values: (string | null | undefined)[]) {
-  return values.some((value) => value?.toLowerCase().includes(keyword))
-}
 
 export default function SearchPage() {
   const [params] = useSearchParams()
@@ -25,9 +22,9 @@ export default function SearchPage() {
   const quizzes = useRequest(() => quizApi.list(), 'search-quizzes')
 
   const documentResults = (documents.data ?? []).filter((document) =>
-    matches(keyword, document.title, document.description, document.subject?.title),
+    matches(keyword, document.title, document.description, document.subject?.name),
   )
-  const quizResults = (quizzes.data ?? []).filter((quiz) => matches(keyword, quiz.title, quiz.subject.title))
+  const quizResults = (quizzes.data ?? []).filter((quiz) => matches(keyword, quiz.name, quiz.subject.name))
   const paged = usePaged(documentResults, PAGE_SIZE)
 
   return (

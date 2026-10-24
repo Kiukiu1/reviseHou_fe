@@ -10,7 +10,7 @@ export interface SavedKey {
   sourceId: number
 }
 
-export interface SavedList {
+interface SavedList {
   documents: DocumentItem[]
   quizzes: QuizSummary[]
 }

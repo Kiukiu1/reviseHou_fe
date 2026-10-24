@@ -4,7 +4,7 @@ export interface MajorNode extends Omit<Major, 'faculty'> {
   subjects: Subject[]
 }
 
-export interface FacultyNode extends Faculty {
+interface FacultyNode extends Faculty {
   majors: MajorNode[]
 }
 
@@ -37,8 +37,4 @@ export function buildSubjectTree(subjects: Subject[]): FacultyNode[] {
   const tree = [...faculties.values()].sort(byName)
   for (const faculty of tree) faculty.majors.sort(byName)
   return tree
-}
-
-export function facultyNameOf(subject: Subject) {
-  return subject.major?.faculty.name ?? null
 }

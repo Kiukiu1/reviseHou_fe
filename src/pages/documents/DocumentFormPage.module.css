@@ -64,32 +64,6 @@
   border-color: var(--color-danger);
 }
 
-select.control {
-  appearance: none;
-  padding-right: 36px;
-}
-
-select.empty {
-  color: var(--color-text-subtle);
-}
-
-select.control option {
-  color: var(--color-text);
-}
-
-.selectWrap {
-  position: relative;
-}
-
-.selectIcon {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: var(--color-icon-muted);
-}
-
 .textarea {
   height: auto;
   min-height: 128px;

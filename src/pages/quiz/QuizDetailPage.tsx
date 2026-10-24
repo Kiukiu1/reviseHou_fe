@@ -18,7 +18,7 @@ import { QUESTIONS_PER_PAGE } from './attemptRules'
 import styles from './QuizDetailPage.module.css'
 
 function isOpen(item: AttemptHistory, quiz: QuizSummary) {
-  const deadline = new Date(item.dateStarted).getTime() + quiz.durationMinutes * 60_000
+  const deadline = new Date(item.dateStarted).getTime() + quiz.estimateMinute * 60_000
   return item.status === 'IN_PROGRESS' && deadline > Date.now()
 }
 
@@ -46,7 +46,7 @@ export default function QuizDetailPage() {
 
   return (
     <StateView
-      loading={quizRequest.loading && !quiz}
+      loading={quizRequest.loading}
       error={quizRequest.error}
       onRetry={quizRequest.reload}
       empty={!quiz}
@@ -58,14 +58,14 @@ export default function QuizDetailPage() {
             width="wide"
             breadcrumbs={[
               { label: 'Bài kiểm tra', to: PATHS.quizLibrary },
-              { label: quiz.subject.title, to: PATHS.subjectQuizzes(quiz.subject.id) },
-              { label: quiz.title },
+              { label: quiz.subject.name, to: PATHS.subjectQuizzes(quiz.subject.id) },
+              { label: quiz.name },
             ]}
-            title={quiz.title}
+            title={quiz.name}
             meta={[
-              { icon: 'folder-sm', label: quiz.subject.title },
-              { icon: 'clock', label: `${quiz.durationMinutes} phút` },
-              { icon: 'quiz-sm', label: `${quiz.questionCount} câu hỏi` },
+              { icon: 'folder-sm', label: quiz.subject.name },
+              { icon: 'clock', label: `${quiz.estimateMinute} phút` },
+              { icon: 'quiz-sm', label: `${quiz.totalQuestion} câu hỏi` },
               { icon: 'user', label: `${quiz.attemptCount} lượt làm` },
             ]}
             actions={<SaveButton saved={saved} onToggle={toggle} />}
@@ -86,11 +86,11 @@ export default function QuizDetailPage() {
                 <ul className={styles.rules}>
                   <li>
                     <Icon name="clock" size={18} />
-                    Thời gian làm bài {quiz.durationMinutes} phút, hết giờ hệ thống tự nộp.
+                    Thời gian làm bài {quiz.estimateMinute} phút, hết giờ hệ thống tự nộp.
                   </li>
                   <li>
                     <Icon name="list" size={18} />
-                    {quiz.questionCount} câu, mỗi trang {QUESTIONS_PER_PAGE} câu. Đáp án được lưu khi bấm “Tiếp theo”.
+                    {quiz.totalQuestion} câu, mỗi trang {QUESTIONS_PER_PAGE} câu. Đáp án được lưu khi bấm “Tiếp theo”.
                   </li>
                   <li>
                     <Icon name="check-circle" size={18} />
@@ -112,7 +112,7 @@ export default function QuizDetailPage() {
                   Lịch sử làm bài
                 </h2>
                 <StateView
-                  loading={historyRequest.loading && !historyRequest.data}
+                  loading={historyRequest.loading}
                   error={historyRequest.error}
                   onRetry={historyRequest.reload}
                   empty={(historyRequest.data ?? []).length === 0}

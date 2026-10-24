@@ -4,10 +4,8 @@ const dateFormatter = new Intl.DateTimeFormat('vi-VN', {
   year: 'numeric',
 })
 
-export function formatDate(value?: string | null): string {
-  if (!value) return ''
-  const date = new Date(value)
-  return Number.isNaN(date.getTime()) ? '' : dateFormatter.format(date)
+export function formatDate(value: string): string {
+  return dateFormatter.format(new Date(value))
 }
 
 export function formatDuration(totalSeconds: number): string {
@@ -22,4 +20,14 @@ export function fileExtension(url?: string | null): string {
   const clean = url.split(/[?#]/)[0]
   const dot = clean.lastIndexOf('.')
   return dot === -1 ? '' : clean.slice(dot + 1).toLowerCase()
+}
+
+const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp', 'gif']
+
+export function isImageUrl(url?: string | null): boolean {
+  return IMAGE_EXTENSIONS.includes(fileExtension(url))
+}
+
+export function matches(keyword: string, ...values: (string | null | undefined)[]) {
+  return values.some((value) => value?.toLowerCase().includes(keyword))
 }

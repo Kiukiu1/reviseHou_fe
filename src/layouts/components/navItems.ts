@@ -1,6 +1,6 @@
 import { PATHS } from '../../routes/paths'
 
-export interface NavItem {
+interface NavItem {
   label: string
   to: string
   isActive: (pathname: string) => boolean

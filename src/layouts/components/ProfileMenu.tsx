@@ -39,14 +39,14 @@ export default function ProfileMenu() {
         aria-expanded={open}
         aria-label="Tài khoản"
       >
-        <Avatar name={user?.username} src={user?.avatarUrl} />
+        <Avatar name={user?.fullName} src={user?.avatar} />
         <Icon name="chevron-down" className={open ? styles.chevronOpen : undefined} />
       </button>
 
       {open && (
         <div className={styles.menu} role="menu">
           <div className={styles.profile}>
-            <strong>{user?.username}</strong>
+            <strong>{user?.fullName}</strong>
             <span>{user?.email}</span>
           </div>
           <Link to={PATHS.settings} className={styles.item} role="menuitem" onClick={close}>

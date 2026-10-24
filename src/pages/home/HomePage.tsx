@@ -71,7 +71,7 @@ export default function HomePage() {
         <div className={styles.heroGrid} aria-hidden="true" />
         <div className={styles.heroInner}>
           <div className={styles.heroCopy}>
-            <p className={`${styles.eyebrow} ${styles.reveal}`}>Xin chào, {firstNameOf(user?.username)}</p>
+            <p className={`${styles.eyebrow} ${styles.reveal}`}>Xin chào, {firstNameOf(user?.fullName)}</p>
             <h1 className={`${styles.heroTitle} ${styles.reveal}`}>
               Học lại,
               <br />
@@ -150,7 +150,7 @@ export default function HomePage() {
             )}
           </header>
           <StateView
-            loading={subjects.loading && !subjects.data}
+            loading={subjects.loading}
             error={subjects.error}
             onRetry={subjects.reload}
             empty={faculties.length === 0}
@@ -201,7 +201,7 @@ export default function HomePage() {
             </Link>
           </header>
           <StateView
-            loading={documents.loading && !documents.data}
+            loading={documents.loading}
             error={documents.error}
             onRetry={documents.reload}
             empty={latestDocuments.length === 0}
@@ -229,7 +229,7 @@ export default function HomePage() {
             </Link>
           </header>
           <StateView
-            loading={quizzes.loading && !quizzes.data}
+            loading={quizzes.loading}
             error={quizzes.error}
             onRetry={quizzes.reload}
             empty={popularQuizzes.length === 0}

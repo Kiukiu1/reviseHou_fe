@@ -24,8 +24,8 @@ const PAGE_SIZE = 5
 
 export default function MyDocumentsPanel() {
   const { user } = useAuth()
-  const userId = user?.id ?? 0
-  const { data, loading, error, reload } = useRequest(() => documentApi.listByAuthor(userId), `my-documents-${userId}`)
+  const userId = user?.id ?? ''
+  const { data, loading, error, reload } = useRequest(() => documentApi.listByUploader(userId), `my-documents-${userId}`)
   const [tab, setTab] = useState<Tab>('ALL')
   const [pendingDelete, setPendingDelete] = useState<DocumentItem | null>(null)
   const [deleting, setDeleting] = useState(false)
@@ -76,7 +76,7 @@ export default function MyDocumentsPanel() {
         </div>
 
         <StateView
-          loading={loading && !data}
+          loading={loading}
           error={error}
           onRetry={reload}
           empty={documents.length === 0}

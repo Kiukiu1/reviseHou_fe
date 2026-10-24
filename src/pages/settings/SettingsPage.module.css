@@ -111,51 +111,6 @@
   color: var(--color-text);
 }
 
-.cardText {
-  margin-top: -8px;
-  font-size: 16px;
-  color: var(--color-text-muted);
-}
-
-.themes {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.theme {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  height: 64px;
-  padding: 0 24px;
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-sm);
-  font-size: 16px;
-  color: var(--color-text);
-}
-
-.themeIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--color-primary-tint);
-  color: var(--color-icon-muted);
-}
-
-.themeActive {
-  border: 2px solid var(--color-primary);
-  background: var(--color-primary-soft);
-}
-
-.themeActive .themeIcon {
-  background: var(--color-primary);
-  color: #ffffff;
-}
-
 .toggleRow {
   display: flex;
   align-items: center;
@@ -230,9 +185,6 @@
   }
 
   .info,
-  .themes {
-    grid-template-columns: minmax(0, 1fr);
-  }
 
   .logout {
     font-size: 16px;

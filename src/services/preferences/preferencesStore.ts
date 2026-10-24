@@ -1,6 +1,6 @@
 import { createPersistentStore } from '../../utils/persistentStore'
 
-export type Theme = 'light' | 'dark'
+type Theme = 'light' | 'dark'
 
 export interface Preferences {
   theme: Theme

@@ -1,3 +1,4 @@
+import { isAxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Button from '../../components/common/Button'
@@ -12,7 +13,6 @@ import { PATHS } from '../../routes/paths'
 import { quizApi } from '../../services/api/quizApi'
 import { subjectApi } from '../../services/api/subjectApi'
 import type { Subject } from '../../types/document'
-import type { QuizContext } from '../../types/quiz'
 import {
   LETTERS,
   QUIZ_LIMITS,
@@ -37,8 +37,10 @@ type Phase = 'editing' | 'confirming' | 'submitting' | 'done'
 const STEPS = ['Thông tin bài', 'Câu hỏi', 'Xem lại & gửi duyệt']
 
 function apiMessage(error: unknown) {
-  const message = (error as { response?: { data?: { message?: unknown } } })?.response?.data?.message
-  return typeof message === 'string' ? message : 'Gửi bài kiểm tra không thành công, vui lòng thử lại.'
+  return (
+    (isAxiosError<{ message?: string }>(error) && error.response?.data?.message) ||
+    'Gửi bài kiểm tra không thành công, vui lòng thử lại.'
+  )
 }
 
 function Stepper({ step, onGo }: { step: Step; onGo: (step: Step) => void }) {
@@ -76,13 +78,13 @@ function InfoStep({ draft, errors, subjects, onChange }: InfoStepProps) {
         <label htmlFor="quiz-title">Tên bài kiểm tra *</label>
         <input
           id="quiz-title"
-          className={control('title')}
-          value={draft.title}
-          maxLength={QUIZ_LIMITS.title}
+          className={control('name')}
+          value={draft.name}
+          maxLength={QUIZ_LIMITS.name}
           placeholder="Ví dụ: Kiểm tra 15 phút chương 3 – Kế thừa"
-          onChange={(event) => onChange({ title: event.target.value })}
+          onChange={(event) => onChange({ name: event.target.value })}
         />
-        {errors.title && <p className={styles.error}>{errors.title}</p>}
+        {errors.name && <p className={styles.error}>{errors.name}</p>}
       </div>
       <div className={styles.fieldRow}>
         <div className={styles.field}>
@@ -104,11 +106,11 @@ function InfoStep({ draft, errors, subjects, onChange }: InfoStepProps) {
             type="number"
             min={QUIZ_LIMITS.minDuration}
             max={QUIZ_LIMITS.maxDuration}
-            className={control('durationMinutes')}
-            value={draft.durationMinutes}
-            onChange={(event) => onChange({ durationMinutes: event.target.value })}
+            className={control('estimateMinute')}
+            value={draft.estimateMinute}
+            onChange={(event) => onChange({ estimateMinute: event.target.value })}
           />
-          {errors.durationMinutes && <p className={styles.error}>{errors.durationMinutes}</p>}
+          {errors.estimateMinute && <p className={styles.error}>{errors.estimateMinute}</p>}
         </div>
       </div>
       <div className={styles.field}>
@@ -168,7 +170,6 @@ function QuestionsStep({ questions, current, showErrors, onSelect, onChange }: Q
   }
 
   const removeQuestion = () => {
-    if (questions.length === 1) return
     onChange((list) => list.filter((_, index) => index !== current))
     onSelect(Math.max(0, current - 1))
   }
@@ -340,19 +341,19 @@ function ReviewStep({ draft, subjects }: { draft: QuizDraft; subjects: Subject[]
   return (
     <section className={styles.reviewLayout}>
       <div className={`${styles.card} ${styles.summary}`}>
-        <h2 className={styles.summaryTitle}>{draft.title}</h2>
+        <h2 className={styles.summaryTitle}>{draft.name}</h2>
         <dl className={styles.summaryList}>
           <div>
             <dt>Môn học</dt>
             <dd>
               {subject
-                ? [subject.major?.faculty.name, subject.major?.name, subject.title].filter(Boolean).join(' › ')
+                ? [subject.major?.faculty.name, subject.major?.name, subject.name].filter(Boolean).join(' › ')
                 : '—'}
             </dd>
           </div>
           <div>
             <dt>Thời gian</dt>
-            <dd>{draft.durationMinutes} phút</dd>
+            <dd>{draft.estimateMinute} phút</dd>
           </div>
           <div>
             <dt>Số câu</dt>
@@ -446,7 +447,7 @@ function QuizForm({ quizId, initial, subjects }: QuizFormProps) {
   const submit = async () => {
     setPhase('submitting')
     setSubmitError('')
-    const context: QuizContext = contextFromDraft(draft)
+    const context = contextFromDraft(draft)
     try {
       if (isUpdate) await quizApi.update(quizId, context)
       else await quizApi.create(context)
@@ -556,10 +557,7 @@ export default function QuizFormPage({ mode }: { mode: 'create' | 'update' }) {
   const quizId = Number(useParams().quizId)
   const isUpdate = mode === 'update'
   const subjects = useRequest(subjectApi.list, 'subjects')
-  const context = useRequest(
-    () => (isUpdate ? quizApi.getContext(quizId) : Promise.resolve(undefined)),
-    `quiz-context-${mode}-${quizId}`,
-  )
+  const context = useRequest(() => quizApi.getContext(quizId), `quiz-context-${quizId}`, isUpdate)
   const locked = isUpdate && (context.data?.attemptCount ?? 0) > 0
 
   const initial = isUpdate ? context.data && draftFromContext(context.data) : (loadStoredDraft() ?? emptyDraft())
@@ -577,7 +575,7 @@ export default function QuizFormPage({ mode }: { mode: 'create' | 'update' }) {
       />
       <Container>
         <StateView
-          loading={(subjects.loading && !subjects.data) || (context.loading && !context.data && isUpdate)}
+          loading={subjects.loading || context.loading}
           error={subjects.error || context.error}
           onRetry={() => {
             subjects.reload()

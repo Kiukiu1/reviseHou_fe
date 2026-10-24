@@ -1,17 +1,17 @@
-export interface QuizSubject {
+interface QuizSubject {
   id: number
-  title: string
-  code?: string | null
+  name: string
+  code: string
 }
 
-export interface QuizAnswer {
+interface QuizAnswer {
   id: number
   title: string
   position: number
   isCorrect?: boolean
 }
 
-export interface QuizQuestion {
+interface QuizQuestion {
   id: number
   title: string
   position: number
@@ -20,16 +20,16 @@ export interface QuizQuestion {
 
 export interface QuizSummary {
   id: number
-  title: string
+  name: string
   description?: string | null
-  durationMinutes: number
-  questionCount: number
+  estimateMinute: number
+  totalQuestion: number
   attemptCount: number
   subject: QuizSubject
-  createdAt: string
+  dateCreated: string
 }
 
-export type AttemptStatus = 'IN_PROGRESS' | 'SUBMITTED'
+type AttemptStatus = 'IN_PROGRESS' | 'SUBMITTED'
 
 export interface AttemptQuestion extends QuizQuestion {
   selectedAnswerId: number | null
@@ -40,11 +40,8 @@ export interface AttemptQuestion extends QuizQuestion {
 export interface Attempt {
   id: number
   status: AttemptStatus
-  dateStarted: string
-  dateSubmitted?: string | null
   expiresAt: string
   totalQuestion: number
-  totalAnswered: number
   totalCorrect?: number | null
   totalWrong?: number | null
   totalSkipped?: number | null
@@ -72,16 +69,16 @@ export type QuizStatus = 'PENDING' | 'ACTIVE' | 'REJECTED' | 'INACTIVE'
 export interface MyQuiz extends QuizSummary {
   status: QuizStatus
   rejectReason?: string | null
-  updateAt: string
+  dateModified: string
 }
 
-export interface QuizAnswerContext {
+interface QuizAnswerContext {
   id?: number
   title: string
   isCorrect: boolean
 }
 
-export interface QuizQuestionContext {
+interface QuizQuestionContext {
   id?: number
   title: string
   explanation?: string | null
@@ -90,12 +87,10 @@ export interface QuizQuestionContext {
 
 export interface QuizContext {
   id?: number
-  title: string
+  name: string
   description?: string | null
   subjectId: number
-  durationMinutes: number
+  estimateMinute: number
   questions: QuizQuestionContext[]
-  status?: QuizStatus
-  rejectReason?: string | null
   attemptCount?: number
 }

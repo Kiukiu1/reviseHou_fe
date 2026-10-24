@@ -1,9 +1,9 @@
 export interface AuthUser {
-  id: number
-  username: string
+  id: string
+  fullName: string
   email: string
-  avatarUrl?: string
-  createdAt?: string
+  avatar?: string | null
+  dateCreated: string
 }
 
 export interface AuthSession {

@@ -1,7 +1,7 @@
 import type { QuizContext } from '../../types/quiz'
 
 export const QUIZ_LIMITS = {
-  title: 200,
+  name: 200,
   description: 500,
   minDuration: 1,
   maxDuration: 180,
@@ -13,7 +13,7 @@ export const QUIZ_LIMITS = {
   maxAnswers: 6,
 }
 
-export interface DraftAnswer {
+interface DraftAnswer {
   key: string
   title: string
   isCorrect: boolean
@@ -27,14 +27,14 @@ export interface DraftQuestion {
 }
 
 export interface QuizDraft {
-  title: string
+  name: string
   description: string
   subjectId: string
-  durationMinutes: string
+  estimateMinute: string
   questions: DraftQuestion[]
 }
 
-export type InfoErrors = Partial<Record<'title' | 'description' | 'subjectId' | 'durationMinutes', string>>
+export type InfoErrors = Partial<Record<'name' | 'description' | 'subjectId' | 'estimateMinute', string>>
 
 const newKey = () => Math.random().toString(36).slice(2, 10)
 
@@ -57,15 +57,15 @@ export function newQuestion(): DraftQuestion {
 }
 
 export function emptyDraft(): QuizDraft {
-  return { title: '', description: '', subjectId: '', durationMinutes: '15', questions: [newQuestion()] }
+  return { name: '', description: '', subjectId: '', estimateMinute: '15', questions: [newQuestion()] }
 }
 
 export function draftFromContext(context: QuizContext): QuizDraft {
   return {
-    title: context.title,
+    name: context.name,
     description: context.description ?? '',
     subjectId: String(context.subjectId),
-    durationMinutes: String(context.durationMinutes),
+    estimateMinute: String(context.estimateMinute),
     questions: context.questions.map((question) => ({
       key: newKey(),
       title: question.title,
@@ -77,10 +77,10 @@ export function draftFromContext(context: QuizContext): QuizDraft {
 
 export function contextFromDraft(draft: QuizDraft): QuizContext {
   return {
-    title: draft.title.trim(),
+    name: draft.name.trim(),
     description: draft.description.trim() || null,
     subjectId: Number(draft.subjectId),
-    durationMinutes: Number(draft.durationMinutes),
+    estimateMinute: Number(draft.estimateMinute),
     questions: draft.questions.map((question) => ({
       title: question.title.trim(),
       explanation: question.explanation.trim() || null,
@@ -91,16 +91,16 @@ export function contextFromDraft(draft: QuizDraft): QuizContext {
 
 export function validateInfo(draft: QuizDraft): InfoErrors {
   const errors: InfoErrors = {}
-  const title = draft.title.trim()
-  if (!title) errors.title = 'Vui lòng nhập tên bài kiểm tra.'
-  else if (title.length > QUIZ_LIMITS.title) errors.title = `Tối đa ${QUIZ_LIMITS.title} ký tự.`
+  const name = draft.name.trim()
+  if (!name) errors.name = 'Vui lòng nhập tên bài kiểm tra.'
+  else if (name.length > QUIZ_LIMITS.name) errors.name = `Tối đa ${QUIZ_LIMITS.name} ký tự.`
   if (draft.description.trim().length > QUIZ_LIMITS.description) {
     errors.description = `Tối đa ${QUIZ_LIMITS.description} ký tự.`
   }
   if (!draft.subjectId) errors.subjectId = 'Vui lòng chọn môn học.'
-  const duration = Number(draft.durationMinutes)
+  const duration = Number(draft.estimateMinute)
   if (!Number.isInteger(duration) || duration < QUIZ_LIMITS.minDuration || duration > QUIZ_LIMITS.maxDuration) {
-    errors.durationMinutes = `Thời gian từ ${QUIZ_LIMITS.minDuration} đến ${QUIZ_LIMITS.maxDuration} phút.`
+    errors.estimateMinute = `Thời gian từ ${QUIZ_LIMITS.minDuration} đến ${QUIZ_LIMITS.maxDuration} phút.`
   }
   return errors
 }
@@ -120,7 +120,7 @@ export function validateQuestion(question: DraftQuestion): string | null {
   return null
 }
 
-const DRAFT_KEY = 'revise.quizDraft'
+const DRAFT_KEY = 'revise.quizDraft.v2'
 
 export function loadStoredDraft(): QuizDraft | null {
   try {

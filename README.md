@@ -37,6 +37,14 @@ Không cần tạo file `.env`. Địa chỉ BE lấy từ biến `VITE_API_URL`
 
 BE chạy ở địa chỉ khác thì tạo `.env.development.local` ghi đè `VITE_API_URL` (file `.local` không đưa lên git). Đăng nhập bằng Google với email `hou.edu.vn`.
 
+Mở `http://localhost:5173` mà trình duyệt báo *refused to connect*: trên một số máy Windows Vite chỉ nghe IPv6 (`::1`) còn trình duyệt lại gọi IPv4 (`127.0.0.1`). Khi đó chạy thêm host:
+
+```bash
+npm run dev -- --host 127.0.0.1
+```
+
+rồi mở `http://127.0.0.1:5173`, và trong `.env` của BE đặt `FRONTEND_URL=http://127.0.0.1:5173` (để BE cho phép CORS và đăng nhập Google quay về đúng địa chỉ), khởi động lại BE. Không sửa `vite.config.ts` cho việc này vì chỉ một số máy bị.
+
 Sửa code và lưu lại là trình duyệt tự cập nhật (gọi là **HMR**). Khi đang code thì **không cần build**.
 
 | Lệnh | Dùng để |
@@ -84,7 +92,6 @@ src/
 │                        ai.service.ts, rating.service.ts, catalog.service.ts,
 │                        user.service.ts, statistics.service.ts)
 │
-├── contexts/           TRẠNG THÁI DÙNG CHUNG cho nhiều trang (sau này: đăng nhập)
 ├── hooks/              HOOK TỰ VIẾT dùng lại nhiều chỗ (vd: useDebounce cho ô tìm kiếm)
 ├── routes/             ĐIỀU HƯỚNG: khai báo tất cả các trang ở 1 file (AppRouter.tsx)
 │
@@ -100,16 +107,11 @@ src/
 │   ├── documents/      Danh sách + tìm kiếm, Chi tiết (xem, đánh giá, bình luận),
 │   │                   Đăng tài liệu, Tài liệu của tôi
 │   ├── quiz/           Danh sách, Làm bài, Kết quả, Tạo bài kiểm tra, Lịch sử
-│   ├── ai-assistant/   Chat với trợ lý AI
-│   ├── review/         Kiểm duyệt tài liệu và bài kiểm tra (giảng viên)
-│   ├── admin/          Quản lý tài khoản, Danh mục khoa - ngành - môn, Thống kê
 │   └── errors/         Trang 403, 404
 │
 ├── utils/              HÀM TIỆN ÍCH THUẦN (định dạng ngày, dung lượng file...)
 └── assets/             Ảnh, icon, font import vào code
 ```
-
-> Các thư mục hiện đang trống, chỉ có file `.gitkeep` để git giữ lại thư mục. Khi đã có file thật trong thư mục thì xóa `.gitkeep` đi.
 
 ### 3.3. Quy tắc đặt file
 
@@ -130,10 +132,7 @@ Các nhóm trong `pages/` và `services/` đặt tên theo nhóm chức năng �
 |---|---|
 | `documents` | DocumentsModule, StorageModule |
 | `quiz` | QuizModule |
-| `ai-assistant` / `ai.service` | AiModule |
 | `rating.service` (dùng trong trang chi tiết) | RatingsModule |
-| `review` | DocumentsModule, QuizModule (phần kiểm duyệt) |
-| `admin` | UsersModule, CatalogModule, StatisticsModule |
 
 ---
 

@@ -12,13 +12,13 @@ export default function SettingsPage() {
 
   const infoItems: { icon: IconName; label: string; value: string; tone: string }[] = [
     { icon: 'mail', label: 'Email', value: user?.email ?? '', tone: styles.toneBlue },
-    { icon: 'user', label: 'Tên hiển thị', value: user?.username ?? '', tone: styles.toneDark },
-    ...(user?.createdAt
+    { icon: 'user', label: 'Tên hiển thị', value: user?.fullName ?? '', tone: styles.toneDark },
+    ...(user?.dateCreated
       ? [
           {
             icon: 'calendar' as const,
             label: 'Ngày tham gia',
-            value: formatDate(user.createdAt),
+            value: formatDate(user.dateCreated),
             tone: styles.toneGreen,
           },
         ]
@@ -35,10 +35,10 @@ export default function SettingsPage() {
       <section className={styles.card} aria-label="Thông tin tài khoản">
         <div className={styles.profile}>
           <span className={styles.avatarRing}>
-            <Avatar name={user?.username} src={user?.avatarUrl} size={48} />
+            <Avatar name={user?.fullName} src={user?.avatar} size={48} />
           </span>
           <div className={styles.profileText}>
-            <strong>{user?.username}</strong>
+            <strong>{user?.fullName}</strong>
             <span>{user?.email}</span>
           </div>
         </div>
