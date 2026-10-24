@@ -1,0 +1,60 @@
+.zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 16px;
+  border: 1px dashed var(--color-primary);
+  border-radius: 4px;
+  text-align: center;
+  transition: background-color 0.15s;
+}
+
+.dragging {
+  background: var(--color-primary-tint);
+}
+
+.invalid {
+  border-color: var(--color-danger);
+}
+
+.icon {
+  color: var(--color-primary);
+}
+
+.title {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.hint {
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--color-text-muted);
+}
+
+.current {
+  font-size: 13px;
+  color: var(--color-primary);
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.pick {
+  height: 29px;
+  padding: 0 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.pick:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}

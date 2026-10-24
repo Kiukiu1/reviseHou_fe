@@ -1,0 +1,50 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding-top: 24px;
+}
+
+.arrow,
+.page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.arrow {
+  color: var(--color-text);
+}
+
+.arrow:disabled {
+  opacity: 0.3;
+}
+
+.page {
+  border: 1px solid var(--color-border);
+  color: var(--color-text-subtle);
+  font-size: 20px;
+}
+
+.page:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.active,
+.active:hover {
+  background: var(--color-active);
+  border-color: var(--color-active);
+  color: var(--color-on-active);
+}
+
+.gap {
+  color: var(--color-text-subtle);
+  letter-spacing: 2px;
+  align-self: flex-end;
+  padding-bottom: 4px;
+}

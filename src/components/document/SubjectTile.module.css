@@ -1,0 +1,45 @@
+.tile {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 67px;
+  padding: 12px 20px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+
+.tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.title {
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 500;
+  font-family: var(--font-button);
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  line-height: 15px;
+  color: var(--color-text-muted);
+}

@@ -1,0 +1,6 @@
+.saved,
+.saved:hover {
+  border-color: var(--color-primary) !important;
+  background: var(--color-primary-tint) !important;
+  color: var(--color-primary) !important;
+}

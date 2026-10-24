@@ -1,0 +1,147 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 24px 48px 48px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.heading {
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 52px;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  font-size: 16px;
+  color: var(--color-text);
+}
+
+.control {
+  width: 100%;
+  height: 40px;
+  padding: 0 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-surface);
+  font-size: 16px;
+  color: var(--color-text);
+}
+
+.control::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.control:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.invalid {
+  border-color: var(--color-danger);
+}
+
+select.control {
+  appearance: none;
+  padding-right: 36px;
+}
+
+select.empty {
+  color: var(--color-text-subtle);
+}
+
+select.control option {
+  color: var(--color-text);
+}
+
+.selectWrap {
+  position: relative;
+}
+
+.selectIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--color-icon-muted);
+}
+
+.textarea {
+  height: auto;
+  min-height: 128px;
+  padding: 8px;
+  resize: vertical;
+}
+
+.error {
+  font-size: 13px;
+  color: var(--color-danger);
+}
+
+.divider {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.submitError {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+  font-size: 13px;
+}
+
+.submit {
+  align-self: center;
+  min-width: 252px;
+}
+
+.successActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(252px, 100%);
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 24px 20px 32px;
+  }
+
+  .section {
+    padding: 0;
+  }
+}

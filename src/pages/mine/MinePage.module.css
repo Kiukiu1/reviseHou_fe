@@ -1,0 +1,39 @@
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: -20px;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 18px;
+  border-bottom: 3px solid transparent;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+}
+
+.tab:hover {
+  color: var(--color-primary);
+}
+
+.active,
+.active:hover {
+  border-bottom-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+  .tab {
+    flex: 1;
+    justify-content: center;
+    padding: 0 8px;
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,26 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-top: 96px;
+  text-align: center;
+}
+
+.code {
+  font-size: 64px;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.text {
+  margin-bottom: 12px;
+  color: var(--color-text-muted);
+}

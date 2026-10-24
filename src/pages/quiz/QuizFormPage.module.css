@@ -1,0 +1,594 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.stepper {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stepItem button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  text-align: left;
+}
+
+.stepItem button:disabled {
+  cursor: default;
+}
+
+.stepDot {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-surface-muted);
+  font-weight: 600;
+}
+
+.stepLabel {
+  font-weight: 600;
+}
+
+.stepCurrent button {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-tint);
+}
+
+.stepCurrent .stepDot {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.stepDone button {
+  color: var(--color-text);
+}
+
+.stepDone .stepDot {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.cardTitle {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.muted {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.field > label {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  gap: 16px;
+}
+
+.control {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.control::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.control:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-tint);
+}
+
+.textarea {
+  height: auto;
+  padding: 10px 12px;
+  line-height: 22px;
+  resize: vertical;
+}
+
+.invalid {
+  border-color: var(--color-danger);
+}
+
+.empty {
+  color: var(--color-text-subtle);
+}
+
+select.control {
+  appearance: none;
+  padding-right: 36px;
+}
+
+select.control option,
+select.control optgroup {
+  color: var(--color-text);
+}
+
+.selectWrap {
+  position: relative;
+}
+
+.selectIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--color-icon-muted);
+}
+
+.error {
+  font-size: 13px;
+  color: var(--color-danger);
+}
+
+.hint {
+  align-self: flex-end;
+  font-size: 12px;
+  color: var(--color-text-subtle);
+}
+
+.errorBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+  font-size: 14px;
+}
+
+.questionsLayout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.questionList {
+  position: sticky;
+  top: calc(var(--header-height) + 16px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.listTitle {
+  padding: 0 4px 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.listItems {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 50svh;
+  overflow-y: auto;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--color-text);
+  text-align: left;
+}
+
+.listItem:hover {
+  background: var(--color-primary-tint);
+}
+
+.listCurrent,
+.listCurrent:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-tint);
+}
+
+.listInvalid .listNumber {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.listNumber {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: var(--color-surface-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.listText {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.listOk {
+  color: var(--color-success);
+}
+
+.addQuestion,
+.addAnswer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  border: 1px dashed var(--color-primary);
+  border-radius: var(--radius-sm);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.addQuestion:hover,
+.addAnswer:hover {
+  background: var(--color-primary-tint);
+}
+
+.addQuestion:disabled {
+  opacity: 0.4;
+}
+
+.editorHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dangerLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.dangerLink:not(:disabled):hover {
+  color: var(--color-danger);
+}
+
+.dangerLink:disabled {
+  opacity: 0.4;
+}
+
+.answers {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.answers legend {
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.answer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px 6px 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.answer:focus-within {
+  border-color: var(--color-primary);
+}
+
+.answerCorrect {
+  border-color: var(--color-success);
+  background: color-mix(in srgb, var(--color-success-soft) 45%, var(--color-surface));
+}
+
+.correctToggle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.correctToggle:hover {
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.answerCorrect .correctToggle {
+  border-color: var(--color-success);
+  background: var(--color-success);
+  color: #ffffff;
+}
+
+.answerInput {
+  flex: 1;
+  min-width: 0;
+  height: 36px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 15px;
+}
+
+.removeAnswer {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--color-text-muted);
+}
+
+.removeAnswer:not(:disabled):hover {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.removeAnswer:disabled {
+  opacity: 0.3;
+}
+
+.editorNav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border);
+}
+
+.reviewLayout {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.summary {
+  position: sticky;
+  top: calc(var(--header-height) + 16px);
+}
+
+.summaryTitle {
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 1.25;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.summaryList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+
+.summaryList dt {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.summaryList dd {
+  margin: 2px 0 0;
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.summaryText {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--color-text-muted);
+}
+
+.notice {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-tint);
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--color-text);
+}
+
+.reviewQuestions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reviewQuestion {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.reviewAnswers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reviewAnswers li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.reviewCorrect {
+  border-color: var(--color-success) !important;
+  background: color-mix(in srgb, var(--color-success-soft) 45%, var(--color-surface));
+}
+
+.reviewCorrect > span:last-child {
+  margin-left: auto;
+  color: var(--color-success);
+}
+
+.reviewLetter {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.reviewExplanation {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-tint);
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+  background: linear-gradient(180deg, transparent, var(--color-bg) 35%);
+}
+
+.successActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(280px, 100%);
+}
+
+.lockedLinks {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .questionsLayout,
+  .reviewLayout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .questionList,
+  .summary {
+    position: static;
+  }
+
+  .listItems {
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 640px) {
+  .stepper {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fieldRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .card {
+    padding: 20px;
+  }
+}

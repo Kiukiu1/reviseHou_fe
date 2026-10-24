@@ -1,0 +1,177 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.title {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.form {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.composer {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.count {
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.error {
+  font-size: 13px;
+  color: var(--color-danger);
+}
+
+.inputBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+.inputBox:focus-within {
+  border-color: var(--color-primary);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 16px;
+}
+
+.input::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.send {
+  display: inline-flex;
+  color: var(--color-icon);
+}
+
+.send:disabled {
+  opacity: 0.4;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.comment {
+  display: flex;
+  gap: 12px;
+}
+
+.nested {
+  margin-top: 8px;
+}
+
+.commentBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.commentHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.commentHead strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-text-muted);
+}
+
+.date {
+  color: var(--color-text-muted);
+}
+
+.content {
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--color-text);
+}
+
+.commentFoot {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mention {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.link {
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+.link:hover {
+  color: var(--color-primary);
+}
+
+.danger:hover {
+  color: var(--color-danger);
+}
+
+.more {
+  align-self: center;
+  height: 29px;
+  padding: 0 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.more:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 20px;
+  }
+}

@@ -1,6 +1,18 @@
 # ReviseHOU – Frontend
 
-Đây là template **React + TypeScript + Vite** gốc, được tạo bằng `npm create vite@latest`. Chưa thêm thư viện nào khác.
+Web cho sinh viên ôn tập: thư viện tài liệu theo khoa – ngành – môn, đăng tài liệu, tạo và làm bài kiểm tra. Dựng bằng **React 19 + TypeScript + Vite**.
+
+Thư viện chính:
+
+| Thư viện | Dùng cho |
+|---|---|
+| `react-router-dom` | Điều hướng trang |
+| `axios` | Gọi API của BE (`src/services/http/httpClient.ts`) |
+| `@tanstack/react-query` | Tải và cache dữ liệu (`hooks/useRequest.ts`) |
+| `react-hook-form` + `zod` | Form và kiểm tra dữ liệu nhập |
+| `@headlessui/react` | Ô chọn, ô chọn có tìm kiếm, hộp thoại (`components/common`) |
+
+Muốn web chạy được thì **BE phải chạy trước** ở `http://localhost:4000`. Cách dựng BE và tạo dữ liệu ban đầu xem README của repo `revise-app-be`.
 
 ---
 
@@ -15,6 +27,15 @@
 npm install      # cài thư viện (lần đầu, hoặc khi package.json thay đổi)
 npm run dev      # chạy web ở http://localhost:5173
 ```
+
+Không cần tạo file `.env`. Địa chỉ BE lấy từ biến `VITE_API_URL` trong 2 file có sẵn:
+
+| File | Dùng khi | `VITE_API_URL` |
+|---|---|---|
+| `.env.development` | `npm run dev` | `http://localhost:4000` |
+| `.env.production` | `npm run build` | `https://api.revise-hou.tech` |
+
+BE chạy ở địa chỉ khác thì tạo `.env.development.local` ghi đè `VITE_API_URL` (file `.local` không đưa lên git). Đăng nhập bằng Google với email `hou.edu.vn`.
 
 Sửa code và lưu lại là trình duyệt tự cập nhật (gọi là **HMR**). Khi đang code thì **không cần build**.
 

@@ -1,0 +1,135 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 24px;
+  align-items: start;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 32px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.intro {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.cardTitle {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.description {
+  margin-top: 4px;
+  font-size: 16px;
+  color: var(--color-text-muted);
+}
+
+.rules {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 16px 20px;
+  list-style: none;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-tint);
+  font-size: 16px;
+  color: var(--color-text);
+}
+
+.rules li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rules li > span {
+  color: var(--color-primary);
+}
+
+.error {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+  font-size: 13px;
+}
+
+.start {
+  align-self: flex-start;
+}
+
+.history {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.history li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.history li + li {
+  border-top: 1px solid var(--color-border);
+}
+
+.historyDate {
+  color: var(--color-text-muted);
+}
+
+.pending {
+  color: var(--color-warning);
+}
+
+.historyLink {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.historyLink:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1000px) {
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 20px;
+  }
+
+  .intro img {
+    display: none;
+  }
+
+  .start {
+    align-self: stretch;
+  }
+}
