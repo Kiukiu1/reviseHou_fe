@@ -10,18 +10,27 @@
   align-items: center;
   height: 40px;
   padding: 0 14px;
-  border-radius: var(--radius-pill);
   font-size: 15px;
   font-weight: 500;
   color: var(--color-text);
   white-space: nowrap;
-  transition:
-    background-color 0.15s,
-    color 0.15s;
+  transition: color 0.15s;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  bottom: 2px;
+  left: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-primary);
+  transform: scaleX(0);
+  transition: transform 0.2s;
 }
 
 .link:hover {
-  background: var(--color-primary-tint);
   color: var(--color-primary);
 }
 
@@ -44,7 +53,14 @@
 
 .active,
 .active:hover {
-  background: var(--color-primary-soft);
   color: var(--color-primary);
   font-weight: 600;
+}
+
+.link.active::after {
+  transform: scaleX(1);
+}
+
+.mobileLink.active {
+  background: var(--color-primary-soft);
 }

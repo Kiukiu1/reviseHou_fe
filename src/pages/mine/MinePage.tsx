@@ -35,8 +35,8 @@ export default function MinePage() {
   return (
     <>
       <PageHeader
-        breadcrumbs={[{ label: 'Của tôi' }, { label: current.label }]}
-        title="Của tôi"
+        breadcrumbs={[{ label: 'Góc của tôi' }, { label: current.label }]}
+        title="Góc của tôi"
         description="Theo dõi trạng thái duyệt và quản lý tài liệu, bài kiểm tra bạn đã đăng."
         actions={
           <Button to={current.to}>

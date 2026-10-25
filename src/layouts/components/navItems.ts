@@ -13,5 +13,5 @@ export const NAV_ITEMS: NavItem[] = [
     to: PATHS.quizLibrary,
     isActive: (pathname) => pathname.startsWith('/quizzes') || pathname.startsWith('/attempts'),
   },
-  { label: 'Của tôi', to: PATHS.mine, isActive: (pathname) => pathname === PATHS.mine },
+  { label: 'Góc của tôi', to: PATHS.mine, isActive: (pathname) => pathname === PATHS.mine },
 ]

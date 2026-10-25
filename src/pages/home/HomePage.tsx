@@ -2,13 +2,11 @@ import { Link } from 'react-router-dom'
 import banner from '../../assets/images/banner.png'
 import Icon, { type IconName } from '../../components/common/Icon'
 import StateView from '../../components/common/StateView'
-import DocumentCard from '../../components/document/DocumentCard'
 import QuizCard from '../../components/quiz/QuizCard'
 import { useAuth } from '../../hooks/useAuth'
 import { useRequest } from '../../hooks/useRequest'
 import SearchBox from '../../layouts/components/SearchBox'
 import { PATHS } from '../../routes/paths'
-import { documentApi } from '../../services/api/documentApi'
 import { quizApi } from '../../services/api/quizApi'
 import { subjectApi } from '../../services/api/subjectApi'
 import { buildSubjectTree } from '../../utils/subjectTree'
@@ -57,12 +55,10 @@ function firstNameOf(fullName?: string) {
 
 export default function HomePage() {
   const { user } = useAuth()
-  const documents = useRequest(documentApi.listApproved, 'home-documents')
   const quizzes = useRequest(() => quizApi.list(), 'home-quizzes')
   const subjects = useRequest(subjectApi.list, 'home-subjects')
 
   const faculties = buildSubjectTree(subjects.data ?? [])
-  const latestDocuments = (documents.data ?? []).slice(0, 4)
   const popularQuizzes = [...(quizzes.data ?? [])].sort((a, b) => b.attemptCount - a.attemptCount).slice(0, 4)
 
   return (
@@ -183,34 +179,6 @@ export default function HomePage() {
                   </Link>
                 )
               })}
-            </div>
-          </StateView>
-        </section>
-
-        <section className={styles.section} aria-labelledby="docs-title">
-          <header className={styles.sectionHeadRow}>
-            <div>
-              <p className={styles.kicker}>Mới cập nhật</p>
-              <h2 id="docs-title" className={styles.sectionTitle}>
-                Tài liệu mới được duyệt
-              </h2>
-            </div>
-            <Link to={PATHS.documentLibrary} className={styles.moreLink}>
-              Xem thư viện
-              <Icon name="arrow-right" size={16} />
-            </Link>
-          </header>
-          <StateView
-            loading={documents.loading}
-            error={documents.error}
-            onRetry={documents.reload}
-            empty={latestDocuments.length === 0}
-            emptyText="Chưa có tài liệu nào được duyệt."
-          >
-            <div className={styles.cardRow}>
-              {latestDocuments.map((document) => (
-                <DocumentCard key={document.id} document={document} />
-              ))}
             </div>
           </StateView>
         </section>
